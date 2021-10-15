@@ -7,15 +7,16 @@ const loader = document.getElementById('loader');
 const loaderContainer = document.getElementById('loader-container');
  
 let apiQuotes = []
+let errorCount;
 //Show Loading 
- function loading() {
+ function showLoadingSpinner() {
      loader.style.display = 'flex';
      loaderContainer.classList.add = 'loader-container';
      quoteContainer.style.display = "none";
  }
 
  //Hide Loading 
- function complete() {
+ function hideLoadingSpinner() {
     quoteContainer.style.display = "block";
      loader.style.display = 'none';
      loaderContainer.classList.remove = 'loader-container';
@@ -24,7 +25,7 @@ let apiQuotes = []
 
 //Show new Quote
 function newQuote() {
-    loading();
+    showLoadingSpinner();
     //Pick a random quote from apiQuotes array
     const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
     //if the quote has no author 
@@ -39,7 +40,7 @@ function newQuote() {
         quoteText.classList.remove('long-quote');
 
     quoteText.textContent = quote.text;
-    complete();
+    hideLoadingSpinner();
 }
 
 //Get Quotes from API
@@ -52,7 +53,9 @@ async function getQuotes() {
         newQuote();
     }
     catch (error) {
-        //Cath Error Here
+        quoteText.textContent = "Oops!..Something is not right.Please try again after sometime..";
+        authorText.textContent = "Admin";
+        hideLoadingSpinner();
     }
 }
 

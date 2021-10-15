@@ -1,14 +1,30 @@
-const quoteContainer = document.getElementById('quote-container')
+const quoteContainer = document.getElementById('container')
 const quoteText = document.getElementById('quote')
 const authorText = document.getElementById('author')
 const twitterBtn = document.getElementById('twitter')
 const newQuoteBtn = document.getElementById('new-quote')
-
+const loader = document.getElementById('loader');
+const loaderContainer = document.getElementById('loader-container');
  
 let apiQuotes = []
+//Show Loading 
+ function loading() {
+     loader.style.display = 'flex';
+     loaderContainer.classList.add = 'loader-container';
+     quoteContainer.style.display = "none";
+ }
+
+ //Hide Loading 
+ function complete() {
+    quoteContainer.style.display = "block";
+     loader.style.display = 'none';
+     loaderContainer.classList.remove = 'loader-container';
+ }
+
 
 //Show new Quote
 function newQuote() {
+    loading();
     //Pick a random quote from apiQuotes array
     const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
     //if the quote has no author 
@@ -23,6 +39,7 @@ function newQuote() {
         quoteText.classList.remove('long-quote');
 
     quoteText.textContent = quote.text;
+    complete();
 }
 
 //Get Quotes from API
